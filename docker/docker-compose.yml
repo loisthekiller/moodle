@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  # ─── Base de datos ───────────────────────────────────────────
+  moodle_db:
+    image: mariadb:10.11
+    container_name: moodle_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - moodle_db_data:/var/lib/mysql
+    networks:
+      - moodle_net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Aplicación Moodle ───────────────────────────────────────
+  moodle:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: moodle_app
+    restart: unless-stopped
+    depends_on:
+      moodle_db:
+        condition: service_healthy
+    ports:
+      - "8081:80"
+    env_file: .env        # contiene todas las variables MOODLE_* y MYSQL_*
+    volumes:
+      - moodle_moodledata:/var/moodledata
+    networks:
+      - moodle_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+# ─── Volúmenes persistentes ──────────────────────────────────
+volumes:
+  moodle_db_data:
+  moodle_moodledata:
+
+# ─── Red interna ─────────────────────────────────────────────
+networks:
+  moodle_net:
+    driver: bridge

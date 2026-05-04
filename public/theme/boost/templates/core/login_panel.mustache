@@ -28,27 +28,6 @@
     }
 }}
 <div class="login-layout-left-content">
-    {{^leftinstructions}}
-        <h1 class="h2 mb-3">{{#str}}loginwelcometitle{{/str}}</h1>
-        <div class="mx-auto mb-4 text-start">
-            {{#str}}loginwelcomedescription{{/str}}
-        </div>
-        <p class="mx-auto mb-4">{{#str}}loginpaneltagline{{/str}}</p>
-        <div class="login-layout-stats">
-            <div class="login-layout-stat">
-                <strong class="login-layout-stat-value">{{#str}}loginstatusers_value{{/str}}</strong>
-                <span>{{#str}}loginstatusers{{/str}}</span>
-            </div>
-            <div class="login-layout-stat">
-                <strong class="login-layout-stat-value">{{#str}}loginstatsites_value{{/str}}</strong>
-                <span>{{#str}}loginstatsites{{/str}}</span>
-            </div>
-            <div class="login-layout-stat">
-                <strong class="login-layout-stat-value">{{#str}}loginstatcountries_value{{/str}}</strong>
-                <span>{{#str}}loginstatcountries{{/str}}</span>
-            </div>
-        </div>
-    {{/leftinstructions}}
     {{#leftinstructions}}
         <div class="mx-auto text-start">
             {{{leftinstructions}}}

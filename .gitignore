@@ -48,6 +48,7 @@ composer.phar
 /public/lib/yuilib/*/*/*-coverage.js
 atlassian-ide-plugin.xml
 /node_modules/
+/docker/.env
 /.vscode/
 moodle-plugin-ci.phar
 .eslintignore
