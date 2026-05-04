@@ -33,7 +33,7 @@ services:
       moodle_db:
         condition: service_healthy
     ports:
-      - "8081:80"
+      - "5001:80"
     env_file: .env        # contiene todas las variables MOODLE_* y MYSQL_*
     volumes:
       - moodle_moodledata:/var/moodledata
